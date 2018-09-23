@@ -1,5 +1,5 @@
 from user import User
-from bike import Bike
+from bike import Bike, BikeState
 import csv
 import CardAccess
 import SystemTime
@@ -70,11 +70,17 @@ class BikeShare:
 			return "Unknown bike"
 		bike = filtered[0]
 		user_info = "{} ({}) ID #{}".format(bike["user"].name, bike["user"].email, bike["user"].student_id) if bike["user"] is not None else ""
-		return "Bike {}, status: {}".format(bike["box"].name, "active" if bike["box"].is_available() else "checked out by " + user_info)
+		status = ""
+		if bike['box'].state == BikeState.ACTIVE_NO_USER:
+			status = "Active - available"
+		elif bike['box'].state == BikeState.ACTIVE_USER:
+			status = "Active - checked out by " + user_info
+
+		return "{}\t{}\t{}".format(bike_serial, bike["box"].name, status)
 
 
 	def __repr__(self):
-		return 'Status Report\n\t' + '\n\t'.join([str(bike['box']) for bike in self.bikes])
+		return 'Status Report\n\tNo.\tName\tStatus\t\n\t' + '\n\t'.join([str(bike['box']) for bike in self.bikes])
 
 
 
