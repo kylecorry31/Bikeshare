@@ -27,6 +27,11 @@ A python implementation of a bikeshare system with simple checkouts user an ID c
 	- On unban, state 1 / add ID into system
 
 ## Usage
+Install the dependencies:
+```
+python3 -m pip install -r requirements.txt
+```
+
 Run the main.py file as such:
 
 ```
