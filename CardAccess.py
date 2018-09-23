@@ -4,15 +4,22 @@ import random
 from user import User
 import Logger
 
-first_names = ['Bob', 'Joe', 'John', 'Matt', 'Harry', 'Alice', 'Sarah', 'Jane', 'Claire', 'Amy']
-last_names = ['Smith', 'Doe', 'Erikson', 'Stevens', 'Washington']
+f = open('data/first_names.txt', 'r')
+first_names = f.read().split('\n')
+f.close()
+
+f = open('data/last_names.txt', 'r')
+last_names = f.read().split('\n')
+last_names = [name.title() for name in last_names]
+f.close()
 
 students = []
 
 def create_random_name():
 	first = random.choice(first_names)
 	last = random.choice(last_names)
-	return (first, last)
+	randInt = random.randint(0, 2)
+	return (first, last, randInt)
 
 def add_user(user):
 	students.append(user)
@@ -30,7 +37,7 @@ def is_valid(student_id):
 def log_swipe(student_id, bike):
 	Logger.log("CardAccess", "ID #{} at bike {} (SerialNo: {}, Location: {})".format(student_id, bike.name, bike.serialNo, bike.station))
 
-for i in range(5):
+for i in range(100):
 	name = create_random_name()
-	u = User(i, "{}{}@wpi.edu".format(name[0][0].lower(), name[1].lower()), "{} {}".format(name[0], name[1]))
+	u = User(i, "{}{}{}@school.edu".format(name[0][0].lower(), name[1].lower(), name[2] if name[2] != 0 else ""), "{} {}".format(name[0], name[1]))
 	add_user(u)

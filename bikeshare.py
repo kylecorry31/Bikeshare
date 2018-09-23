@@ -1,6 +1,6 @@
-import UserDirectory
 from user import User
 from bike import Bike
+import csv
 import CardAccess
 import SystemTime
 from datetime import timedelta
@@ -9,23 +9,16 @@ import Logger
 class BikeShare:
 
 	def __init__(self):
-		self.bikes = [
-			{
-				"user": None,
-				"rental_start": None,
-				"box": Bike(0, "Q1", "quad", self)
-			},
-			{
-				"user": None,
-				"rental_start": None,
-				"box": Bike(1, "Q2", "quad", self)
-			},
-			{
-				"user": None,
-				"rental_start": None,
-				"box": Bike(2, "Q3", "quad", self)
-			}
-		] # TODO: load bikes from DB
+		self.bikes = []
+		with open('data/bikes.csv', 'r') as csvfile:
+			reader = csv.reader(csvfile, delimiter=',')
+			for row in reader:
+				bike = {
+					"user": None,
+					"rental_start": None,
+					"box": Bike(int(row[0]), row[1], row[2], self)
+				}
+				self.bikes.append(bike)
 
 	def _has_bike(self, user_id):
 		return len(list(filter(lambda bike: bike["user"] is not None and bike["user"].student_id == user_id, self.bikes))) != 0
@@ -77,7 +70,7 @@ class BikeShare:
 			return "Unknown bike"
 		bike = filtered[0]
 		user_info = "{} ({}) ID #{}".format(bike["user"].name, bike["user"].email, bike["user"].student_id) if bike["user"] is not None else ""
-		return "Bike {}, {} from {}, status: {}".format(bike_serial, bike["box"].name, bike["box"].station, "active" if bike["box"].is_available() else "checked out by " + user_info)
+		return "Bike {}, status: {}".format(bike["box"].name, "active" if bike["box"].is_available() else "checked out by " + user_info)
 
 
 	def __repr__(self):
