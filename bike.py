@@ -38,6 +38,34 @@ class Bike:
 			else:
 				# flash and beep
 				pass
+		elif self.state is BikeState.OUT_OF_ORDER_USER:
+			if self.bikeshare.can_return_bike(user_id, self.serialNo):
+				# flash and beep
+				self.unlock()
+				self.bikeshare.return_bike(user_id, self.serialNo)
+				# stop timer
+				self.state = BikeState.OUT_OF_ORDER_NO_USER
+			else:
+				# flash and beep
+				pass
+		elif self.state is BikeState.OUT_OF_ORDER_NO_USER:
+			# flash and beep
+			pass
+
+	def on_activate(self):
+		Logger.log("Bike {}".format(self.serialNo), "activated")
+		if self.state == BikeState.OUT_OF_ORDER_NO_USER:
+			self.state = BikeState.ACTIVE_NO_USER
+		elif self.state == BikeState.OUT_OF_ORDER_USER:
+			self.state = BikeState.ACTIVE_USER	
+
+	def on_deactivate(self):
+		Logger.log("Bike {}".format(self.serialNo), "out of order")
+		if self.state == BikeState.ACTIVE_NO_USER:
+			self.state = BikeState.OUT_OF_ORDER_NO_USER
+		elif self.state == BikeState.ACTIVE_USER:
+			# Send email
+			self.state = BikeState.OUT_OF_ORDER_USER
 
 	def unlock(self):
 		Logger.log("Bike {}".format(self.serialNo), "unlocked")

@@ -64,6 +64,18 @@ class BikeShare:
 			return
 		filtered[0]['box'].on_swipe(user_id)
 
+	def on_deactivate_bike(self, bike_serial):
+		filtered = list(filter(lambda bike: bike["box"].serialNo == bike_serial, self.bikes))
+		if len(filtered) == 0:
+			return
+		filtered[0]['box'].on_deactivate()
+
+	def on_activate_bike(self, bike_serial):
+		filtered = list(filter(lambda bike: bike["box"].serialNo == bike_serial, self.bikes))
+		if len(filtered) == 0:
+			return
+		filtered[0]['box'].on_activate()
+
 	def get_information(self, bike_serial):
 		filtered = list(filter(lambda bike: bike["box"].serialNo == bike_serial, self.bikes))
 		if len(filtered) == 0:
@@ -75,6 +87,10 @@ class BikeShare:
 			status = "Active - available"
 		elif bike['box'].state == BikeState.ACTIVE_USER:
 			status = "Active - checked out by " + user_info
+		elif bike['box'].state == BikeState.OUT_OF_ORDER_NO_USER:
+			status = "Inactive"
+		elif bike['box'].state == BikeState.OUT_OF_ORDER_USER:
+			status = "Inactive - checked out by " + user_info
 
 		return "{}\t{}\t{}".format(bike_serial, bike["box"].name, status)
 
@@ -95,8 +111,24 @@ def main():
 
 	while True:
 		print("====================================================\n")
-		action = input('Swipe card (s) or status report (r): ')
+		action = input('Swipe card (s), status report (r), activate (a), deactivate (d): ')
 		if action[0] == 'r':
+			print()
+			Logger.log("BikeShare", str(bikeshare))
+			print()
+			continue
+		elif action[0] == 'a':
+			bike_number = int(input("Activate bike number: "))
+			print()
+			bikeshare.on_activate_bike(bike_number)
+			print()
+			Logger.log("BikeShare", str(bikeshare))
+			print()
+			continue
+		elif action[0] == 'd':
+			bike_number = int(input("Deactivate bike number: "))
+			print()
+			bikeshare.on_deactivate_bike(bike_number)
 			print()
 			Logger.log("BikeShare", str(bikeshare))
 			print()
