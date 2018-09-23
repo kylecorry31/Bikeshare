@@ -1,5 +1,5 @@
 from enum import Enum
-import Logger
+from bikeshare import Logger
 
 class BikeState(Enum):
 	ACTIVE_NO_USER = 1

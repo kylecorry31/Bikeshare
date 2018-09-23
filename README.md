@@ -27,10 +27,10 @@ A python implementation of a bikeshare system with simple checkouts user an ID c
 	- On unban, state 1 / add ID into system
 
 ## Usage
-Run the bikeshare.py file as such:
+Run the main.py file as such:
 
 ```
-python3 bikeshare.py
+python3 main.py
 ```
 
 ## Credits

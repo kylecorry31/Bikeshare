@@ -1,4 +1,4 @@
-import SystemTime
+from bikeshare import SystemTime
 __name__ = "Logger"
 
 def log(system_name, message):

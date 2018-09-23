@@ -1,8 +1,8 @@
 __name__ = "CardAccess"
 
 import random
-from user import User
-import Logger
+from bikeshare.user import User
+from bikeshare import Logger
 
 f = open('data/first_names.txt', 'r')
 first_names = f.read().split('\n')
