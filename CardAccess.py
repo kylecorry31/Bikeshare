@@ -35,7 +35,7 @@ def is_valid(student_id):
 	return lookup(student_id) is not None
 
 def log_swipe(student_id, bike):
-	Logger.log("CardAccess", "ID #{} at bike {} (SerialNo: {}, Location: {})".format(student_id, bike.name, bike.serialNo, bike.station))
+	Logger.log("CardAccess", "ID #{} at bike {} (SerialNo: {}, Location: {})".format(student_id, bike.name, bike.serialNo, bike.station.title()))
 
 for i in range(100):
 	name = create_random_name()
