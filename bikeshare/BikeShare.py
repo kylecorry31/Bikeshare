@@ -1,5 +1,4 @@
-from bikeshare.user import User
-from bikeshare.bike import Bike, BikeState
+from bikeshare.entities import User, Bike, BikeState
 from bikeshare import CardAccess, SystemTime, Logger
 import csv
 from datetime import timedelta

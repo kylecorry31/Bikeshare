@@ -1,6 +1,15 @@
 from enum import Enum
 from bikeshare import Logger
 
+class User:
+	def __init__(self, student_id, email, name):
+		self.student_id = student_id
+		self.email = email
+		self.name = name
+
+	def __repr__(self):
+		return "{} ({}) - ID #{}".format(self.name, self.email, self.student_id)
+
 class BikeState(Enum):
 	ACTIVE_NO_USER = 1
 	ACTIVE_USER = 2
