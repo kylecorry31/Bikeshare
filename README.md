@@ -4,8 +4,8 @@ A python implementation of a bikeshare system with simple checkouts user an ID c
 
 ### States (Bike)
 1. Active, no user
-	- On valid ID swipe, state 2 / beep, flash green, unlock box for 5 seconds, start timer
-	- On invalid ID swipe, state 1 / beep, flash red
+	- On valid ID swipe and user doesn't have a bike checked out, state 2 / beep, flash green, unlock box for 5 seconds, start timer
+	- On invalid ID swipe or user has a bike checked out, state 1 / beep, flash red
 	- On deactivate, state 3
 2. Active, user
 	- On ID swipe and user has this bike checked out, state 1 / beep, flash green, unlock box for 5 seconds, stop timer
