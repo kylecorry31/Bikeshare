@@ -4,8 +4,8 @@ import csv
 from datetime import timedelta
 
 class BikeShare:
-
 	def __init__(self):
+		Logger.log("BikeShare", "system started")
 		self.bikes = []
 		with open('data/bikes.csv', 'r') as csvfile:
 			reader = csv.reader(csvfile, delimiter=',')

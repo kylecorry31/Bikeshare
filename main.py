@@ -5,11 +5,11 @@ from bikeshare.BikeShare import BikeShare
 
 def main():
 	bikeshare = BikeShare()
-
+	print()
 	print("============ Welcome to Gompei's Gears! ============\n")
 
 	bikes = [bike["box"] for bike in bikeshare.bikes]
-	Logger.log("BikeShare", str(bikeshare))
+	Logger.log("BikeShare", str(bikeshare), to_file=False)
 	print()
 
 	while True:
@@ -17,7 +17,7 @@ def main():
 		action = input('Swipe card (s), status report (r), activate (a), deactivate (d): ')
 		if action[0] == 'r':
 			print()
-			Logger.log("BikeShare", str(bikeshare))
+			Logger.log("BikeShare", str(bikeshare), to_file=False)
 			print()
 			continue
 		elif action[0] == 'a':
@@ -25,7 +25,7 @@ def main():
 			print()
 			bikeshare.on_activate_bike(bike_number)
 			print()
-			Logger.log("BikeShare", str(bikeshare))
+			Logger.log("BikeShare", str(bikeshare), to_file=False)
 			print()
 			continue
 		elif action[0] == 'd':
@@ -33,7 +33,7 @@ def main():
 			print()
 			bikeshare.on_deactivate_bike(bike_number)
 			print()
-			Logger.log("BikeShare", str(bikeshare))
+			Logger.log("BikeShare", str(bikeshare), to_file=False)
 			print()
 			continue
 		student_id = int(input("Student ID: "))
@@ -41,7 +41,7 @@ def main():
 		print()
 		bikeshare.on_swipe(student_id, bike_number)
 		print()
-		Logger.log("BikeShare", str(bikeshare))
+		Logger.log("BikeShare", str(bikeshare), to_file=False)
 		print()
 
 if __name__ == '__main__':
